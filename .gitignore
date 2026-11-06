@@ -39,3 +39,6 @@ logs/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+.turbo/
+data/
