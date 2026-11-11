@@ -1,0 +1,167 @@
+{
+  "type": "base",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "805ec737-b4bf-480a-b2a1-5544ef24c329",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "exchange_rates"
+      ],
+      "writes": [
+        "s|tbl|public.exchange_rates",
+        "n|tbl|public.exchange_rates",
+        "e|tbl|public.exchange_rates",
+        "n|rel|public.exchange_rates",
+        "n|type|public.exchange_rates",
+        "n|rel|public.exchange_rates_pkey",
+        "n|rel|public.exchange_rates_currency_rate_date_unique"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "exchange_rates",
+        "exchange_rates_rate_date_index"
+      ],
+      "writes": [
+        "s|idx|public.exchange_rates_rate_date_index",
+        "n|idx|public.exchange_rates_rate_date_index",
+        "e|idx|public.exchange_rates_rate_date_index",
+        "n|rel|public.exchange_rates_rate_date_index"
+      ],
+      "reads": [
+        "n|tbl|public.exchange_rates",
+        "n|sch|public",
+        "n|col|public.exchange_rates.rate_date"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "public",
+      "name": "exchange_rates",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "currency",
+      "type": "varchar(3)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "rate",
+      "type": "numeric(12,4)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "rate_date",
+      "type": "date",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "exchange_rates_rate_date_index",
+      "nameExplicit": false,
+      "columns": [
+        {
+          "value": "rate_date",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "exchange_rates_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "exchange_rates",
+      "name": "exchange_rates_currency_rate_date_unique",
+      "nameExplicit": false,
+      "columns": [
+        "currency",
+        "rate_date"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    }
+  ]
+}

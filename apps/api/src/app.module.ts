@@ -7,8 +7,6 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { RatesModule } from './rates/rates.module.js';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { CurrenciesModule } from './currencies/currencies.module.js';
-import { ScheduleModule } from '@nestjs/schedule';
-import { BankOfAlgeriaService } from './bank-of-algeria/bank-of-algeria.service.js';
 
 @Module({
   imports: [
@@ -20,12 +18,7 @@ import { BankOfAlgeriaService } from './bank-of-algeria/bank-of-algeria.service.
         const db = drizzle(process.env.DATABASE_URL!);
 
         if (process.env.MIGRATE === 'true') {
-          await migrate(db, {
-            migrationsFolder:
-              process.env.DEPLOYMENT_ENV === 'local'
-                ? './drizzle-local'
-                : './drizzle',
-          });
+          await migrate(db, { migrationsFolder: './drizzle' });
         }
 
         return { db };
@@ -33,9 +26,8 @@ import { BankOfAlgeriaService } from './bank-of-algeria/bank-of-algeria.service.
     }),
     RatesModule,
     CurrenciesModule,
-    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
-  providers: [AppService, BankOfAlgeriaService],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,24 +1,12 @@
 import { Controller, Post } from '@nestjs/common';
-import { BankOfAlgeriaService } from '../bank-of-algeria/bank-of-algeria.service.js';
-import { RatesService } from './rates.service.js';
+import { RatesService, type IngestRatesResult } from './rates.service.js';
 
 @Controller('rates')
 export class RatesController {
-  constructor(
-    private readonly ratesService: RatesService,
-    private readonly bankOfAlgeriaService: BankOfAlgeriaService,
-  ) {}
+  constructor(private readonly ratesService: RatesService) {}
 
   @Post('ingest')
-  async ingestRates(): Promise<void> {
-    await this.ratesService.ingestRates();
-    return;
-  }
-
-  @Post('ingest-from-bank-of-algeria')
-  async ingestRatesFromBankOfAlgeria() {
-    const rates = await this.bankOfAlgeriaService.fetchLatestRates();
-
-    return rates;
+  ingestRates(): Promise<IngestRatesResult> {
+    return this.ratesService.ingestRates();
   }
 }
