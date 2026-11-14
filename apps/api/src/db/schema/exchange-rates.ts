@@ -14,7 +14,7 @@ export const exchangeRates = snakeCase.table(
   {
     id: uuid().primaryKey().defaultRandom(),
     currency: varchar({ length: 3 }).notNull(),
-    rate: numeric({ precision: 12, scale: 4 }).notNull(),
+    rate: numeric({ precision: 12, scale: 6 }).notNull(),
     rateDate: date().notNull(),
     createdAt: timestamp({
       withTimezone: true,

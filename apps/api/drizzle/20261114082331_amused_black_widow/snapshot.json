@@ -1,0 +1,39 @@
+{
+  "type": "diff",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "b543572c-d2d8-41fe-9192-d1590aa11ce0",
+  "prevIds": [
+    "805ec737-b4bf-480a-b2a1-5544ef24c329"
+  ],
+  "footprints": [
+    {
+      "statementType": "alter_column",
+      "statementTarget": [
+        "column",
+        "public",
+        "exchange_rates",
+        "rate"
+      ],
+      "writes": [
+        "s|colprop|public.exchange_rates.rate.type",
+        "s|colprop|public.exchange_rates.rate.default"
+      ],
+      "reads": [
+        "n|tbl|public.exchange_rates",
+        "n|sch|public",
+        "n|col|public.exchange_rates.rate"
+      ],
+      "sqlHash": "36a0dafe53922fc1"
+    }
+  ],
+  "deltas": [
+    {
+      "op": "alter",
+      "key": "columns\u0000[\"public\",\"exchange_rates\",\"rate\"]",
+      "set": {
+        "type": "numeric(12,6)"
+      }
+    }
+  ]
+}
