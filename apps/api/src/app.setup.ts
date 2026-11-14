@@ -1,4 +1,4 @@
-import { VersioningType, type INestApplication } from '@nestjs/common';
+import { ValidationPipe, VersioningType, type INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export function configureApp(app: INestApplication): void {
@@ -7,6 +7,14 @@ export function configureApp(app: INestApplication): void {
     type: VersioningType.URI,
     defaultVersion: '1',
   });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: false },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Algeria Exchange Rate Monitor API')

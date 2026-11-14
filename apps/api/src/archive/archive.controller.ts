@@ -1,5 +1,5 @@
 import { Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { CronSecretGuard } from '../common/guards/cron-secret.guard.js';
 import { ArchiveService, type ArchiveImportResult } from './archive.service.js';
 
@@ -10,13 +10,8 @@ export class ArchiveController {
 
   @Post()
   @UseGuards(CronSecretGuard)
-  @ApiOperation({
-    summary: 'Import the historical exchange-rate archive into the database',
-  })
   @ApiHeader({
     name: 'x-cron-secret',
-    description:
-      'Shared secret configured in CRON_SECRET. A Bearer token in the Authorization header is also accepted.',
     required: true,
   })
   importArchive(): Promise<ArchiveImportResult> {
