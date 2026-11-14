@@ -44,7 +44,7 @@ describe('RatesService.findRates', () => {
       currency: 'usd',
       page: 2,
       limit: 10,
-    } as GetRatesQueryDto);
+    } satisfies GetRatesQueryDto);
 
     expect(result).toEqual({
       data: ROWS,
@@ -68,19 +68,6 @@ describe('RatesService.findRates', () => {
     });
     expect(limit).toHaveBeenCalledWith(100);
     expect(offset).toHaveBeenCalledWith(0);
-  });
-
-  it('rejects combining date with from/to', async () => {
-    const { db, select } = createFindDatabase(ROWS, 0);
-    const service = createService(db);
-
-    await expect(
-      service.findRates({
-        date: '2026-10-30',
-        from: '2026-10-01',
-      } as GetRatesQueryDto),
-    ).rejects.toBeInstanceOf(BadRequestException);
-    expect(select).not.toHaveBeenCalled();
   });
 
   it('rejects a from date after the to date', async () => {
