@@ -42,15 +42,9 @@ export class RatesService {
   ) {}
 
   async findRates(query: GetRatesQueryDto): Promise<FindRatesResult> {
-    const { currency, date, from, to } = query;
+    const { currency, from, to } = query;
     const page = query.page ?? 1;
     const limit = query.limit ?? 100;
-
-    if (date && (from || to)) {
-      throw new BadRequestException(
-        'Use either "date" or "from"/"to", not both',
-      );
-    }
 
     if (from && to && from > to) {
       throw new BadRequestException('"from" must be before or equal to "to"');
@@ -62,16 +56,12 @@ export class RatesService {
       filters.push(eq(exchangeRates.currency, currency.toUpperCase()));
     }
 
-    if (date) {
-      filters.push(eq(exchangeRates.rateDate, date));
-    } else {
-      if (from) {
-        filters.push(gte(exchangeRates.rateDate, from));
-      }
+    if (from) {
+      filters.push(gte(exchangeRates.rateDate, from));
+    }
 
-      if (to) {
-        filters.push(lte(exchangeRates.rateDate, to));
-      }
+    if (to) {
+      filters.push(lte(exchangeRates.rateDate, to));
     }
 
     const where = filters.length > 0 ? and(...filters) : undefined;
@@ -89,10 +79,7 @@ export class RatesService {
           .orderBy(desc(exchangeRates.rateDate), asc(exchangeRates.currency))
           .limit(limit)
           .offset((page - 1) * limit),
-        this.db
-          .select({ total: count() })
-          .from(exchangeRates)
-          .where(where),
+        this.db.select({ total: count() }).from(exchangeRates).where(where),
       ]);
 
       const total = Number(totals[0]?.total ?? 0);

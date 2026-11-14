@@ -24,21 +24,15 @@ export class GetRatesQueryDto {
   currency?: string;
 
   @ApiPropertyOptional({
-    description: 'Exact rate date (YYYY-MM-DD). Cannot be combined with from/to.',
-    example: '2026-10-30',
-  })
-  @IsOptional()
-  @Matches(ISO_DATE_REGEX, { message: 'date must use the YYYY-MM-DD format' })
-  @IsDateString({ strict: true }, { message: 'date must be a valid calendar date' })
-  date?: string;
-
-  @ApiPropertyOptional({
     description: 'Inclusive start date (YYYY-MM-DD)',
     example: '2026-01-01',
   })
   @IsOptional()
   @Matches(ISO_DATE_REGEX, { message: 'from must use the YYYY-MM-DD format' })
-  @IsDateString({ strict: true }, { message: 'from must be a valid calendar date' })
+  @IsDateString(
+    { strict: true },
+    { message: 'from must be a valid calendar date' },
+  )
   from?: string;
 
   @ApiPropertyOptional({
@@ -47,7 +41,10 @@ export class GetRatesQueryDto {
   })
   @IsOptional()
   @Matches(ISO_DATE_REGEX, { message: 'to must use the YYYY-MM-DD format' })
-  @IsDateString({ strict: true }, { message: 'to must be a valid calendar date' })
+  @IsDateString(
+    { strict: true },
+    { message: 'to must be a valid calendar date' },
+  )
   to?: string;
 
   @ApiPropertyOptional({ default: 1, minimum: 1 })
